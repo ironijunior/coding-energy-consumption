@@ -59,7 +59,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 .status(status.value())
                 .message(ex.getMessage())
                 .build();
-        logger.error(error.getMessage(), error);
+        logger.error(error.getMessage(), ex);
         return error;
     }
 
