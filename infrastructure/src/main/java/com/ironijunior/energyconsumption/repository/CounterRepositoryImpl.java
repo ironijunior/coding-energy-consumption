@@ -6,6 +6,8 @@ import com.ironijunior.energyconsumption.exception.EntityNotFoundException;
 import com.ironijunior.energyconsumption.model.Counter;
 import com.ironijunior.energyconsumption.ports.CounterRepositoryPort;
 import com.ironijunior.energyconsumption.repository.spring.CounterSpringRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
@@ -17,6 +19,8 @@ import java.util.Optional;
  */
 public class CounterRepositoryImpl implements CounterRepositoryPort {
 
+    private static final Logger logger = LoggerFactory.getLogger(CounterRepositoryImpl.class);
+
     private CounterSpringRepository counterSpringRepository;
 
     public CounterRepositoryImpl(CounterSpringRepository counterSpringRepository) {
@@ -25,6 +29,7 @@ public class CounterRepositoryImpl implements CounterRepositoryPort {
 
     @Override
     public Counter findById(String id) {
+        logger.info("Getting the counter for id {}", id);
         Optional<CounterEntity> counterEntity = counterSpringRepository.findById(id);
 
         return Converter.convertEntityToCounter(counterEntity
@@ -33,6 +38,7 @@ public class CounterRepositoryImpl implements CounterRepositoryPort {
 
     @Override
     public Boolean save(Counter counter) {
+        logger.info("Saving a new counter");
         Optional<CounterEntity> existentCounter = counterSpringRepository.findById(counter.getId());
         if (existentCounter.isEmpty()) {
             counterSpringRepository.save(Converter.convertCounterToEntity(counter));

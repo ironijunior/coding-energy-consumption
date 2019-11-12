@@ -8,6 +8,8 @@ import com.ironijunior.energyconsumption.model.Counter;
 import com.ironijunior.energyconsumption.ports.ConsumptionRepositoryPort;
 import com.ironijunior.energyconsumption.repository.spring.ConsumptionSpringRepository;
 import com.ironijunior.energyconsumption.repository.spring.CounterSpringRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
@@ -28,6 +30,7 @@ import static java.util.stream.Collectors.toList;
  */
 public class ConsumptionRepositoryImpl implements ConsumptionRepositoryPort {
 
+    private static final Logger logger = LoggerFactory.getLogger(ConsumptionRepositoryImpl.class);
     private static final long TWENTY_FOUR_HOURS = 24;
 
     private ConsumptionSpringRepository consumptionSpringRepository;
@@ -41,6 +44,7 @@ public class ConsumptionRepositoryImpl implements ConsumptionRepositoryPort {
 
     @Override
     public List<Consumption> findAllByDuration(String duration) {
+        logger.info("Getting consumption by duration {}", duration);
         LocalDateTime finalDate = LocalDateTime.now();
         LocalDateTime initialDate = finalDate.minusWeeks(1);
         if ("24h".equalsIgnoreCase(duration)) {
@@ -56,6 +60,7 @@ public class ConsumptionRepositoryImpl implements ConsumptionRepositoryPort {
 
     @Override
     public Boolean save(Counter counter, BigDecimal amount) {
+        logger.info("Saving consumption for counter");
         Optional<CounterEntity> counterEntity = counterSpringRepository.findById(counter.getId());
 
         ConsumptionEntity consumptionEntity = new ConsumptionEntity();
@@ -68,6 +73,7 @@ public class ConsumptionRepositoryImpl implements ConsumptionRepositoryPort {
     }
 
     private List<Consumption> transformEntitiesToConsumption(List<ConsumptionEntity> entities) {
+        logger.debug("Transforming entities to consumption");
         Map<CounterEntity, List<ConsumptionEntity>> consumptionsPerCounter = entities.stream()
                 .collect(groupingBy(ConsumptionEntity::getCounter));
 
