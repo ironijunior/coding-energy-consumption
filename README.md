@@ -81,7 +81,7 @@ Gives out the consumption report per village for the last 24h.
 ### Improvements
 There are some points that would be nice to improve:
 - add i18n for exceptions
-- test obvious scenarios for endpoints (method now allowed, 404 on wrong endpoints, ...)
+~~- test obvious scenarios for endpoints (method now allowed, 404 on wrong endpoints, ...)~~
 - improve debug logs
 - upload docker image 
 
