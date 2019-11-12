@@ -1,11 +1,19 @@
 HELP.md
 target/
-api/target/
-differ/target/
+application/target/
+infrastructure/target/
+web/target/
+domain/target/
 
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+
+**.project
+**.prefs
+**.classpath
+**.settings
+**.factorypath
 
 # Compiled class file
 *.class
