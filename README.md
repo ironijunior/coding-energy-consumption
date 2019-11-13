@@ -9,13 +9,13 @@ The application can be executed in two ways:
 ### running with Docker
 - requirement: Docker
 ```sh
-~/diff-base64: docker-compose up
+~/coding-energy-consumption: docker-compose up
 ```
 
 ### running with Maven
 - requirement: JDK 11
 ```sh
-~/diff-base64: mvn spring-boot:run
+~/coding-energy-consumption: mvn spring-boot:run
 ```
 
 ## Tech aspects
@@ -36,7 +36,7 @@ The pattern used was [Ports & Adapters], also knows as Hexagonal Architecture.
 
 I decided to break the project in 4 modules:
 - `app`: module to run the application, has Spring Boot as dependency in order to manage the beans and start the application.
-- `domain`: module where are the objects that address our business domain. The idea is to do not have any dependency of frameworks and libraries, so our business become technology agnostic.
+- `domain`: module where are the objects that address our business domain. The idea is to not have any dependency of frameworks and libraries, so our business become technology agnostic.
 - `infrastructure`: module for external dependencies, in this case the database.
 - `web`: module to expose the rest api. 
 
@@ -75,7 +75,7 @@ Gives out the consumption report per village for the last 24h.
 
 ### Assumptions
 - created a new endpoint to register counters
-- sending any value different of `24h` to the `consumption_report` endpoint will return the report for the last week
+- sending any value different of `24h` to the `consumption_report` endpoint will return a consumption report for the last week
 - all values send on `amount` will have precision of 3 (n.xxx)
 
 ### Improvements
@@ -83,6 +83,7 @@ There are some points that would be nice to improve:
 - add i18n for exceptions
 ~~- test obvious scenarios for endpoints (method now allowed, 404 on wrong endpoints, ...)~~
 - improve debug logs
+- stress edge cases in testing
 - upload docker image 
 
 [Ports & Adapters]:https://softwarecampament.wordpress.com/portsadapters/
